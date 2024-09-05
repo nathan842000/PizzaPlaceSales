@@ -18,7 +18,7 @@ namespace PizzaPlaceSales.WebAPI.Controllers
 
         [HttpPost("")]
         [AllowAnonymous]
-        [SwaggerOperation(Tags = new[] { "Import" }, Summary = "API call to import CSV files for pizza types, pizzas and the orders.")]
+        [SwaggerOperation(Tags = new[] { "Import" }, Summary = "API call to import CSV files for pizza types, pizzas, orders and the order-details.")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> ImportPizzasAndOrders([FromForm] PizzasAndOrders pizzasAndOrders)
