@@ -8,12 +8,8 @@ namespace PizzaPlaceSales.Services
 {
     public static class DependencyInjection
     {
-        public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
+        public static void ConfigureServices(this IServiceCollection services)
         {
-            var connectionStringSettings = new ConnectionStringSettings();
-            configuration.GetSection("ConnectionStrings").Bind(connectionStringSettings);
-            services.AddSingleton(connectionStringSettings);
-
             services.AddScoped<IImportFileService, ImportFileService>();
             services.AddScoped<IDataTableService, DataTableService>();
             services.AddScoped<IFileService, FileService>();

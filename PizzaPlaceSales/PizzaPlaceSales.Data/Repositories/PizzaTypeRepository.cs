@@ -1,5 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 using PizzaPlaceSales.Data.Repositories.Interfaces;
 using PizzaPlaceSales.DTOs.Settings;
 using System.Data;
@@ -8,9 +8,11 @@ namespace PizzaPlaceSales.Data.Repositories
 {
     public class PizzaTypeRepository : IPizzaTypeRepository
     {
+        private readonly PizzaPlaceSalesDBContext _dbContext;
         private readonly ConnectionStringSettings _connectionStringSettings;
-        public PizzaTypeRepository(ConnectionStringSettings connectionStringSettings)
+        public PizzaTypeRepository(PizzaPlaceSalesDBContext dBContext, ConnectionStringSettings connectionStringSettings)
         {
+            _dbContext = dBContext;
             _connectionStringSettings = connectionStringSettings;
         }
         public async Task BulkInsert(DataTable dataTable)
@@ -40,6 +42,11 @@ namespace PizzaPlaceSales.Data.Repositories
                 bulkCopy.DestinationTableName = "PizzaTypes";
                 await bulkCopy.WriteToServerAsync(dataTable);
             }
+        }
+
+        public async Task<List<string>> GetAllPizzaTypeIds()
+        {
+            return await _dbContext.PizzaTypes.Select(x => x.PizzaTypeId).ToListAsync();
         }
     }
 }

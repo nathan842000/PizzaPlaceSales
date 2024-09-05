@@ -5,5 +5,6 @@ namespace PizzaPlaceSales.Data.Repositories.Interfaces
     public interface IOrderDetailRepository
     {
         Task BulkInsert(DataTable dataTable);
+        Task<List<int>> GetAllOrderDetailsIds();
     }
 }

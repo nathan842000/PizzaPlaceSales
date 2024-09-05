@@ -12,8 +12,8 @@ namespace PizzaPlaceSales.WebAPI
             // Add services to the container.            
 
             builder.Services.AddControllers();
-            builder.Services.ConfigureServices(builder.Configuration);
-            builder.Services.ConfigureRepositories();
+            builder.Services.ConfigureServices();
+            builder.Services.ConfigureRepositories(builder.Configuration);
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c => { c.EnableAnnotations(); });
