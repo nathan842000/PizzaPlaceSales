@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PizzaPlaceSales.DTOs.ApiResponses;
 using PizzaPlaceSales.DTOs.Imports;
 using PizzaPlaceSales.Services.Interfaces;
@@ -7,7 +6,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PizzaPlaceSales.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ImportController : ControllerBase
     {
@@ -17,8 +16,7 @@ namespace PizzaPlaceSales.WebAPI.Controllers
             _importFileService = importFileService;
         }
 
-        [HttpPost("")]
-        [AllowAnonymous]
+        [HttpPost]
         [SwaggerOperation(Tags = new[] { "Import" }, Summary = "API call to import CSV files for pizza types, pizzas, orders and the order-details.")]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]

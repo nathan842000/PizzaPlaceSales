@@ -17,6 +17,7 @@ namespace PizzaPlaceSales.Services
             services.AddScoped<IPizzaService, PizzaService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IOrderDetailService, OrderDetailService>();
+            services.AddScoped<ISalesService, SalesService>();
         }
     }
 }

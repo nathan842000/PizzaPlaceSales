@@ -20,6 +20,7 @@ namespace PizzaPlaceSales.Data
             services.AddScoped<IPizzaRepository, PizzaRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+            services.AddScoped<ISalesRepository, SalesRepository>();
         }
     }
 }
