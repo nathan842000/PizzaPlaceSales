@@ -5,7 +5,7 @@ using PizzaPlaceSales.Services.Interfaces;
 using System.Data;
 using System.Globalization;
 
-namespace PizzaPlaceSales.Services
+namespace PizzaPlaceSales.Services.Services
 {
     public class DataTableService : IDataTableService
     {

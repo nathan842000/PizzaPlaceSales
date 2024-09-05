@@ -1,8 +1,5 @@
-using PizzaPlaceSales.Data.Repositories;
-using PizzaPlaceSales.Data.Repositories.Interfaces;
-using PizzaPlaceSales.DTOs.Settings;
+using PizzaPlaceSales.Data;
 using PizzaPlaceSales.Services;
-using PizzaPlaceSales.Services.Interfaces;
 
 namespace PizzaPlaceSales.WebAPI
 {
@@ -12,13 +9,11 @@ namespace PizzaPlaceSales.WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
-            ConfigureSettings(builder);
-            ConfigureServices(builder);
-            ConfigureRepositories(builder);
+            // Add services to the container.            
 
             builder.Services.AddControllers();
+            builder.Services.ConfigureServices(builder.Configuration);
+            builder.Services.ConfigureRepositories();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c => { c.EnableAnnotations(); });
@@ -38,28 +33,6 @@ namespace PizzaPlaceSales.WebAPI
             app.MapControllers();
 
             app.Run();
-        }
-
-        private static void ConfigureSettings(WebApplicationBuilder builder)
-        {
-            var connectionStringSettings = new ConnectionStringSettings();
-            builder.Configuration.GetSection("ConnectionStrings").Bind(connectionStringSettings);
-            builder.Services.AddSingleton(connectionStringSettings);
-        }
-
-        private static void ConfigureServices(WebApplicationBuilder builder)
-        {
-            builder.Services.AddScoped<IImportFileService, ImportFileService>();
-            builder.Services.AddScoped<IDataTableService, DataTableService>();
-            builder.Services.AddScoped<IFileService, FileService>();
-            builder.Services.AddScoped<IPizzaTypeService, PizzaTypeService>();
-            builder.Services.AddScoped<IPizzaService, PizzaService>();
-        }
-
-        private static void ConfigureRepositories(WebApplicationBuilder builder)
-        {
-            builder.Services.AddScoped<IPizzaTypeRepository, PizzaTypeRepository>();
-            builder.Services.AddScoped<IPizzaRepository, PizzaRepository>();
         }
     }
 }

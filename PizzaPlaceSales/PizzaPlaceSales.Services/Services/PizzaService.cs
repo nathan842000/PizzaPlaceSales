@@ -2,26 +2,26 @@
 using PizzaPlaceSales.Data.Repositories.Interfaces;
 using PizzaPlaceSales.Services.Interfaces;
 
-namespace PizzaPlaceSales.Services
+namespace PizzaPlaceSales.Services.Services
 {
-    public class PizzaTypeService : IPizzaTypeService
+    public class PizzaService : IPizzaService
     {
         private readonly IFileService _fileService;
         private readonly IDataTableService _dataTableService;
-        private readonly IPizzaTypeRepository _pizzaTypeRepository;
-        public PizzaTypeService(IFileService fileService, IDataTableService dataTableService, IPizzaTypeRepository pizzaTypeRepository)
+        private readonly IPizzaRepository _pizzaRepository;
+        public PizzaService(IFileService fileService, IDataTableService dataTableService, IPizzaRepository pizzaRepository)
         {
             _fileService = fileService;
             _dataTableService = dataTableService;
-            _pizzaTypeRepository = pizzaTypeRepository;
+            _pizzaRepository = pizzaRepository;
         }
         public async Task ImportFile(IFormFile file)
         {
             if (!_fileService.IsValidCsvFile(file))
                 throw new InvalidDataException("You can only upload with an extension of *.csv.");
 
-            var pizzaTypeTable = _dataTableService.CsvToDataTable(file);
-            await _pizzaTypeRepository.BulkInsert(pizzaTypeTable);
+            var pizzaTable = _dataTableService.CsvToDataTable(file);
+            await _pizzaRepository.BulkInsert(pizzaTable);
         }
     }
 }

@@ -6,16 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-	</ItemGroup>
+  <ItemGroup>
+	<FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <PackageReference Include="CsvHelper" Version="33.0.1" />
-	</ItemGroup>
+  <ItemGroup>
+	<PackageReference Include="CsvHelper" Version="33.0.1" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\PizzaPlaceSales.Data\PizzaPlaceSales.Data.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PizzaPlaceSales.Data\PizzaPlaceSales.Data.csproj" />
+  </ItemGroup>
 
 </Project>

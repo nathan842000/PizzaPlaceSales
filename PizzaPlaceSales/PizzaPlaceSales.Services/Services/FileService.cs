@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using PizzaPlaceSales.Services.Interfaces;
 
-namespace PizzaPlaceSales.Services
+namespace PizzaPlaceSales.Services.Services
 {
     public class FileService : IFileService
     {
