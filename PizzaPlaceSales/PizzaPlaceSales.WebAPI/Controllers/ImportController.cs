@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PizzaPlaceSales.DTOs.ApiResponses;
 using PizzaPlaceSales.DTOs.Imports;
 using PizzaPlaceSales.Services.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
@@ -19,19 +20,19 @@ namespace PizzaPlaceSales.WebAPI.Controllers
         [HttpPost("")]
         [AllowAnonymous]
         [SwaggerOperation(Tags = new[] { "Import" }, Summary = "API call to import CSV files for pizza types, pizzas, orders and the order-details.")]
-        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> ImportPizzasAndOrders([FromForm] PizzasAndOrders pizzasAndOrders)
         {
             try
             {
                 await _importFileService.ImportFile(pizzasAndOrders);
-                return Ok(true);
+                return Ok(new ApiResponse { IsSuccess = true, Message = "Success" });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
-            }            
+                return BadRequest(new ApiResponse { IsSuccess = false, Message = ex.Message });
+            }
         }
     }
 }
