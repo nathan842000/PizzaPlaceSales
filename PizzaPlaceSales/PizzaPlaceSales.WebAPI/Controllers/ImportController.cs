@@ -29,6 +29,8 @@ namespace PizzaPlaceSales.WebAPI.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.Message.Contains("does not belong to table"))
+                    return BadRequest(new ApiResponse { IsSuccess = false, Message = $"CSV files should be uploaded correctly in the correct fields, example 'pizza_types.csv' should be uploaded in PizzaTypesCSVFile, 'pizzas.csv' should be uploaded in PizzasCSVFile, 'orders.csv' should be uploaded in OrdersCSVFile, 'order_details.csv' should be uploaded in OrderDetailsCSVFile., {ex.Message}" });
                 return BadRequest(new ApiResponse { IsSuccess = false, Message = ex.Message });
             }
         }
