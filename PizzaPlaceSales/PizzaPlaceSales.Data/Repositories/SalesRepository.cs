@@ -42,6 +42,31 @@ namespace PizzaPlaceSales.Data.Repositories
             return result;
         }
 
+        public async Task<IEnumerable<SalesByCategory>> GetTotalSalesByCategory()
+        {
+            var salesByCategory = await
+                (from od in _dbContext.OrderDetails
+                 join p in _dbContext.Pizzas on od.PizzaId equals p.PizzaId
+                 join pt in _dbContext.PizzaTypes on p.PizzaTypeId equals pt.PizzaTypeId
+                 group new { od.Quantity, p.Price, pt.Category } by pt.Category into g
+                 select new
+                 {
+                     Category = g.Key,
+                     TotalSales = g.Sum(x => x.Quantity * x.Price)
+                 })
+                .OrderByDescending(result => result.TotalSales)
+                .ToListAsync();
+
+            var result = new List<SalesByCategory>();
+            foreach (var item in salesByCategory)
+                result.Add(new SalesByCategory
+                {
+                    Category = item.Category,
+                    TotalSales = item.TotalSales,
+                });
+            return result;
+        }
+
         public async Task<IEnumerable<SalesByYear>> GetTotalSalesByYear()
         {
             var salesByYear = await

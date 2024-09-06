@@ -67,5 +67,22 @@ namespace PizzaPlaceSales.WebAPI.Controllers
                 return BadRequest(new ApiResponse { IsSuccess = false, Message = ex.Message });
             }
         }
+
+        [HttpGet]
+        [SwaggerOperation(Tags = new[] { "Sales" }, Summary = "Get total sales by category.")]
+        [ProducesResponseType(typeof(IEnumerable<SalesByCategory>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> GetTotalSalesByCategory()
+        {
+            try
+            {
+                var result = await _salesService.GetTotalSalesByCategory();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse { IsSuccess = false, Message = ex.Message });
+            }
+        }
     }
 }
