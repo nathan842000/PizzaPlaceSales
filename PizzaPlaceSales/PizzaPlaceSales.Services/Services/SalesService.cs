@@ -11,6 +11,12 @@ namespace PizzaPlaceSales.Services.Services
         {
             _salesRepository = salesRepository;
         }
+
+        public async Task<IEnumerable<Top10SellingPizzas>> GetTop10SellingPizzasByQuantity()
+        {
+            return await _salesRepository.GetTop10SellingPizzasByQuantity();
+        }
+
         public async Task<IEnumerable<SalesByYear>> GetTotalSalesByYear()
         {
             return await _salesRepository.GetTotalSalesByYear();

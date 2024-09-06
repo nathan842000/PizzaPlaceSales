@@ -19,7 +19,7 @@ namespace PizzaPlaceSales.WebAPI.Controllers
         }
         [HttpGet]
         [SwaggerOperation(Tags = new[] { "Sales" }, Summary = "Get total sales by year.")]
-        [ProducesResponseType(typeof(SalesByYear), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<SalesByYear>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> GetTotalSalesByYear()
         {
@@ -36,13 +36,30 @@ namespace PizzaPlaceSales.WebAPI.Controllers
 
         [HttpGet]
         [SwaggerOperation(Tags = new[] { "Sales" }, Summary = "Get total sales by year and month.")]
-        [ProducesResponseType(typeof(SalesByYearAndMonth), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<SalesByYearAndMonth>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> GetTotalSalesByYearAndMonth()
         {
             try
             {
                 var result = await _salesService.GetTotalSalesByYearAndMonth();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse { IsSuccess = false, Message = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        [SwaggerOperation(Tags = new[] { "Sales" }, Summary = "Get top 10 selling pizzas by quantity.")]
+        [ProducesResponseType(typeof(IEnumerable<Top10SellingPizzas>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> GetTop10SellingPizzasByQuantity()
+        {
+            try
+            {
+                var result = await _salesService.GetTop10SellingPizzasByQuantity();
                 return Ok(result);
             }
             catch (Exception ex)

@@ -6,5 +6,6 @@ namespace PizzaPlaceSales.Data.Repositories.Interfaces
     {
         Task<IEnumerable<SalesByYear>> GetTotalSalesByYear();
         Task<IEnumerable<SalesByYearAndMonth>> GetTotalSalesByYearAndMonth();
+        Task<IEnumerable<Top10SellingPizzas>> GetTop10SellingPizzasByQuantity();
     }
 }

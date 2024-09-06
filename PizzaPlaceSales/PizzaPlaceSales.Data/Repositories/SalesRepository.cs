@@ -11,6 +11,37 @@ namespace PizzaPlaceSales.Data.Repositories
         { 
             _dbContext = dbContext;
         }
+
+        public async Task<IEnumerable<Top10SellingPizzas>> GetTop10SellingPizzasByQuantity()
+        {
+            var topPizzas = await
+                (from od in _dbContext.OrderDetails
+                 join p in _dbContext.Pizzas on od.PizzaId equals p.PizzaId
+                 join pt in _dbContext.PizzaTypes on p.PizzaTypeId equals pt.PizzaTypeId
+                 group new { p, pt, od.Quantity } by new { p.PizzaId, pt.PizzaTypeId, pt.Name } into g
+                 select new
+                 {
+                     PizzaId = g.Key.PizzaId,
+                     PizzaTypeId = g.Key.PizzaTypeId,
+                     Name = g.Key.Name,
+                     TotalQuantitySold = g.Sum(x => x.Quantity)
+                 })
+                .OrderByDescending(result => result.TotalQuantitySold)
+                .Take(10)
+                .ToListAsync();
+
+            var result = new List<Top10SellingPizzas>();
+            foreach (var item in topPizzas)
+                result.Add(new Top10SellingPizzas
+                {
+                    PizzaId = item.PizzaId,
+                    PizzaTypeId = item.PizzaTypeId,
+                    Name = item.Name,
+                    TotalQuantitySold= item.TotalQuantitySold
+                });
+            return result;
+        }
+
         public async Task<IEnumerable<SalesByYear>> GetTotalSalesByYear()
         {
             var salesByYear = await
